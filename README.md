@@ -1,7 +1,5 @@
 # AudioMoth-Web-Chime #
-A web-based application for setting the time of AudioMoth devices using an encoded chime.
-
-Available online at [chime.openacousticdevices.info](https://chime.openacousticdevices.info).
+Test build of the web-based application for setting the time of AudioMoth devices using an encoded chime.
 
 For more details on the device itself, visit [www.openacousticdevices.info](https://www.openacousticdevices.info).
 
