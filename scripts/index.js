@@ -122,11 +122,24 @@ async function handleChime () {
 
 }
 
-// Check which chime button to display
+async function loadPage () {
 
-function checkMobile () {
+    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+    if (!isMobile) {
+
+        await initialiseTzf();
+
+    }
+
+    updateTime();
+
+    chimeButton.addEventListener('click', handleChime);
+
+    mainContent.style.display = 'flex';
+
+    if (isIOS) {
 
         iphoneWarning.innerHTML = 'Adjust volume to 3/4 full and ensure<br>that silent mode is switched off.';
 
@@ -142,9 +155,7 @@ function checkMobile () {
 
     }
 
-    mainContent.style.display = 'flex';
-
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+    if (isMobile) {
 
         hideMap();
 
@@ -161,6 +172,8 @@ function checkMobile () {
         chimeButton.style.bottom = '10px';
         chimeButton.style.zIndex = '1000';
         chimeButton.style.setProperty('width', '80%', 'important');
+        chimeButton.style.setProperty('height', '110px', 'important');
+        chimeButton.style.fontSize = 'xxx-large';
 
     } else {
 
@@ -171,18 +184,6 @@ function checkMobile () {
         setUpMap();
 
     }
-
-}
-
-async function loadPage () {
-
-    await initialiseTzf();
-
-    updateTime();
-
-    chimeButton.addEventListener('click', handleChime);
-
-    checkMobile();
 
 }
 
