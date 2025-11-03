@@ -216,7 +216,7 @@ function setUpMap () {
             zoom: 2
         });
 
-        userLocationButton = L.easyButton('<img src="/assets/crosshair.svg" style="width: 12px; height: 12px; margin-bottom: 3px;">', async function () {
+        userLocationButton = L.easyButton('<img src="./assets/crosshair.svg" style="width: 12px; height: 12px; margin-bottom: 3px;">', async function () {
 
             if (!navigator.geolocation) {
 
