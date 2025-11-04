@@ -166,6 +166,15 @@ async function loadPage () {
         timeRow.style.height = '280px';
         locationRow.style.height = '300px';
 
+        const thickness = window.innerWidth * 0.01 + 'px';
+        const radius = window.innerWidth * 0.04 + 'px';
+        document.querySelectorAll('.rounded-border').forEach(el => {
+
+            el.style.setProperty('border-width', thickness, 'important');
+            el.style.setProperty('border-radius', radius, 'important');
+
+        });
+
         chimeButton.style.position = 'fixed';
         chimeButton.style.left = '50%';
         chimeButton.style.transform = 'translateX(-50%)';
