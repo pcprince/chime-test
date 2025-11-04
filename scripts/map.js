@@ -297,7 +297,7 @@ function setUpMap () {
 
     const osm = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         minZoom: 1,
-        maxZoom: 17,
+        maxZoom: 19,
         attribution: ''
     });
 
