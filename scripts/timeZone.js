@@ -14,8 +14,6 @@ let calculatingTimeZone = false;
 
 const HEADER_TIMEZONE_REGEX = /GMT([-|+]\d+)?:?(\d\d)?/;
 const MINUTES_IN_HOUR = 60;
-const SECONDS_IN_MINUTE = 60;
-const MILLISECONDS_IN_SECOND = 1000;
 
 async function initialiseTzf () {
 
