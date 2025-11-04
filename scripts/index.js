@@ -21,11 +21,17 @@ let audioMothChimeConnector;
 const timeLabel = document.getElementById('time-label');
 const timeZoneLabel = document.getElementById('time-zone-label');
 const timeZoneLink = document.getElementById('time-zone-link');
+const timeZoneHolder = document.getElementById('time-zone-holder');
 const timeZoneMobileSpan = document.getElementById('time-zone-mobile-span');
 
 const chimeButton = document.getElementById('chime-button');
 
 const localTimeZoneModalLabel = document.getElementById('local-time-zone-modal-label');
+
+const locationSwitchLabel = document.getElementById('location-switch-label');
+
+const latLabel = document.getElementById('lat-label');
+const lonLabel = document.getElementById('lon-label');
 
 const switchDiv = document.getElementById('switch-div');
 
@@ -162,12 +168,20 @@ async function loadPage () {
         timeZoneMobileSpan.style.display = '';
         timeZoneLink.style.display = 'none';
 
+        const width = window.innerWidth;
+
+        timeLabel.style.fontSize = 0.1 * width + 'px';
+        timeZoneHolder.style.fontSize = 0.05 * width + 'px';
+        locationSwitchLabel.style.fontSize = 0.05 * width + 'px';
+        latLabel.style.fontSize = 0.075 * width + 'px';
+        lonLabel.style.fontSize = 0.075 * width + 'px';
+
         timeRow.style.marginTop = '40%';
         timeRow.style.height = '280px';
         locationRow.style.height = '300px';
 
-        const thickness = window.innerWidth * 0.01 + 'px';
-        const radius = window.innerWidth * 0.04 + 'px';
+        const thickness = width * 0.01 + 'px';
+        const radius = width * 0.04 + 'px';
         document.querySelectorAll('.rounded-border').forEach(el => {
 
             el.style.setProperty('border-width', thickness, 'important');
@@ -182,7 +196,7 @@ async function loadPage () {
         chimeButton.style.zIndex = '1000';
         chimeButton.style.setProperty('width', '80%', 'important');
         chimeButton.style.setProperty('height', '110px', 'important');
-        chimeButton.style.fontSize = 'xxx-large';
+        chimeButton.style.fontSize = 0.05 * width + 'px';
 
     } else {
 
@@ -249,10 +263,7 @@ function checkWindowSize () {
     }
 
     const height = window.innerHeight;
-    const timeLabel = document.getElementById('time-label');
-    const latLabel = document.getElementById('lat-label');
-    const lonLabel = document.getElementById('lon-label');
-    const locationSwitchLabel = document.getElementById('location-switch-label');
+
     const mapDiv = document.getElementById('map-div');
 
     let timeFontSize;
