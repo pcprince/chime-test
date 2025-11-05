@@ -10,7 +10,7 @@
         <title>AudioMoth Chime</title>
     </head>
 
-    <body style="background-color: #3D8E5A; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; min-height:100%; height: 90vh; overflow-y: hidden;">
+    <body style="background-color: #3D8E5A; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden;">
 
         <div class="vertical-centre" id="main-content" style="display: none; color: #ffffff; flex-direction: column;">
 
@@ -23,11 +23,11 @@
                 <div id="time-row" class="row" style="height: 200px;">
                     <div class="col-md-10 offset-md-1 rounded-border">
                         <p id="time-label" style="font-size: 100px; margin-top: 0px; margin-bottom: 0px; height: 165px; text-align: center;"></p>
-                        <p style="margin-top: 0px; margin-bottom: 10px; height: fit-content; text-align: center; font-size: 50px;" id="time-zone-holder">
+                        <div id="time-zone-holder" style="margin-top: 0px; margin-bottom: 10px; height: fit-content; text-align: center; font-size: 50px; display: flex; justify-content: center; align-items: flex-start; gap: 8px;">
                             <span id="time-zone-label">Local Time Zone:</span>
                             <a href="#" id="time-zone-link" style="color: #8ec6a2;"></a>
                             <span id="time-zone-mobile-span" style="display: none;"></span>
-                        </p>
+                        </div>
                     </div>
                 </div>
     
