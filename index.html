@@ -21,12 +21,18 @@
                 </div>
     
                 <div id="time-row" class="row" style="height: 200px;">
-                    <div class="col-md-10 offset-md-1 rounded-border">
-                        <p id="time-label" style="font-size: 100px; margin-top: 0px; margin-bottom: 0px; height: 165px; text-align: center;"></p>
-                        <div id="time-zone-holder" style="margin-top: 0px; margin-bottom: 10px; height: fit-content; text-align: center; font-size: 50px; display: flex; justify-content: center; align-items: flex-start; gap: 8px;">
-                            <span id="time-zone-label">Local Time Zone:</span>
-                            <a href="#" id="time-zone-link" style="color: #8ec6a2;"></a>
-                            <span id="time-zone-mobile-span" style="display: none;"></span>
+                    <div class="col-md-10 offset-md-1 rounded-border" style="text-align: center;">
+                        <div class="row align-items-center justify-content-center" style="">
+                            <div class="col-auto">
+                                <span id="time-label" style="font-size: 100px; margin: 0; text-align: center; display: block;"></span>
+                            </div>
+                        </div>
+                        <div id="time-zone-holder" class="row align-items-start justify-content-center" style="font-size: 50px; gap: 8px;">
+                            <div class="col-auto text-center">
+                                <span id="time-zone-label">Local Time Zone:</span>
+                                <a href="#" id="time-zone-link" style="color: #8ec6a2;"></a>
+                                <span id="time-zone-mobile-span" style="display: none;"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -34,8 +40,10 @@
                 <div id="location-row" class="row" style="margin-top: 20px; height: 250px;">
                     <div class="col-md-10 offset-md-1 rounded-border">
                         <div class="row">
-                            <span id="lat-label" class="disabled-label" style="font-size: 60px; margin-top: 0px; margin-bottom: 0px; height: fit-content; text-align: center;">0.000000°N</span>
-                            <span id="lon-label" class="disabled-label" style="font-size: 60px; margin-top: 0px; margin-bottom: 0px; height: fit-content; text-align: center;">0.000000°E</span>
+                            <span id="lat-label" class="disabled-label" style="font-size: 60px; margin-top: 0px; margin-bottom: 0px; text-align: center;">0.000000°N</span>
+                        </div>
+                        <div class="row">
+                            <span id="lon-label" class="disabled-label" style="font-size: 60px; margin-top: 0px; margin-bottom: 0px; text-align: center;">0.000000°E</span>
                         </div>
                         <div class="row" style="margin-top: 5px; margin-bottom: 10px;">
                             <div class="col-md-10 offset-md-1" style="text-align: center; display: block;">

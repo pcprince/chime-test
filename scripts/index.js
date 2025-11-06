@@ -172,12 +172,16 @@ async function loadPage () {
 
         timeLabel.style.fontSize = 0.1 * width + 'px';
         timeZoneHolder.style.fontSize = 0.05 * width + 'px';
+
         locationSwitchLabel.style.fontSize = 0.05 * width + 'px';
+
         latLabel.style.fontSize = 0.075 * width + 'px';
+        latLabel.style.marginTop = '0px';
         lonLabel.style.fontSize = 0.075 * width + 'px';
+        lonLabel.style.marginTop = '-25px';
 
         timeRow.style.marginTop = '40%';
-        timeRow.style.height = '280px';
+        timeRow.style.height = '270px';
         locationRow.style.height = '300px';
 
         const thickness = width * 0.01 + 'px';
