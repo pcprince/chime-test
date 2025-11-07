@@ -207,7 +207,7 @@ async function loadPage () {
         chimeButton.style.bottom = (height * 0.05) + 'px';
         chimeButton.style.zIndex = '1000';
         chimeButton.style.setProperty('width', '80%', 'important');
-        chimeButton.style.setProperty('height', (height * 0.1) + 'px', 'important');
+        chimeButton.style.setProperty('height', (height * 0.075) + 'px', 'important');
         chimeButton.style.fontSize = 0.05 * width + 'px';
 
     } else {
