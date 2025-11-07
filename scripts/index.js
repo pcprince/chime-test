@@ -157,7 +157,11 @@ async function loadPage () {
 
     } else {
 
+        // If Android or other
+
         iphoneWarning.innerText = '';
+
+        chimeButton.innerText = 'PLAY CHIME';
 
     }
 
@@ -169,6 +173,7 @@ async function loadPage () {
         timeZoneLink.style.display = 'none';
 
         const width = window.innerWidth;
+        const height = window.innerHeight;
 
         timeLabel.style.fontSize = 0.1 * width + 'px';
         timeZoneHolder.style.fontSize = 0.05 * width + 'px';
@@ -180,7 +185,10 @@ async function loadPage () {
         lonLabel.style.fontSize = 0.075 * width + 'px';
         lonLabel.style.marginTop = '-25px';
 
-        timeRow.style.marginTop = '40%';
+        let timeRowMarginTop = 'calc(40vh - 270px';
+        timeRowMarginTop += isIOS ? ' - ' + iphoneWarning.offsetHeight + 'px)' : ')';
+        timeRow.style.marginTop = timeRowMarginTop;
+
         timeRow.style.height = '270px';
         locationRow.style.height = '300px';
 
@@ -196,10 +204,10 @@ async function loadPage () {
         chimeButton.style.position = 'fixed';
         chimeButton.style.left = '50%';
         chimeButton.style.transform = 'translateX(-50%)';
-        chimeButton.style.bottom = '10px';
+        chimeButton.style.bottom = (height * 0.05) + 'px';
         chimeButton.style.zIndex = '1000';
         chimeButton.style.setProperty('width', '80%', 'important');
-        chimeButton.style.setProperty('height', '110px', 'important');
+        chimeButton.style.setProperty('height', (height * 0.1) + 'px', 'important');
         chimeButton.style.fontSize = 0.05 * width + 'px';
 
     } else {
