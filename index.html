@@ -14,7 +14,7 @@
 
         <div class="vertical-centre" id="main-content" style="display: none; color: #ffffff; flex-direction: column;">
 
-            <div style="padding: 20px; overflow-x: hidden; margin: 0; width: 100%; height: 100vh;">
+            <div style="padding: 20px; overflow-x: hidden; overflow-y: hidden; margin: 0; width: 100%; height: 100vh;">
     
                 <div class="row">
                     <p id="iphone-warning" style="font-size: 30px; transition: opacity 1s; text-align: center; min-height: fit-content; margin-bottom: 0;"></p>
@@ -40,12 +40,10 @@
                 <div id="location-row" class="row" style="margin-top: 20px; height: 250px;">
                     <div class="col-md-10 offset-md-1 rounded-border">
                         <div class="row">
-                            <span id="lat-label" class="disabled-label" style="font-size: 60px; margin-top: 0px; margin-bottom: 0px; text-align: center;">0.000000°N</span>
+                            <p id="lat-label" class="disabled-label" style="font-size: 60px; margin-top: 0px; margin-bottom: 0px; text-align: center;">0.000000°N</p>
+                            <p id="lon-label" class="disabled-label" style="font-size: 60px; margin-top: 0px; margin-bottom: 0px; text-align: center;">0.000000°E</p>
                         </div>
-                        <div class="row">
-                            <span id="lon-label" class="disabled-label" style="font-size: 60px; margin-top: 0px; margin-bottom: 0px; text-align: center;">0.000000°E</span>
-                        </div>
-                        <div class="row" style="margin-top: 5px; margin-bottom: 10px;">
+                        <div class="row" style="margin-top: 5px; margin-bottom: 10px;" id="location-switch-row">
                             <div class="col-md-10 offset-md-1" style="text-align: center; display: block;">
                                 <div id="switch-div" class="form-switch" style="padding-left: 0px; height: 70px;">
                                     <span id="location-switch-label" style="font-size: 50px; margin-right: 50px; display: inline-flex; align-items: center; height: 100%;">Location:</span>

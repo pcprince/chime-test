@@ -28,6 +28,7 @@ const chimeButton = document.getElementById('chime-button');
 
 const localTimeZoneModalLabel = document.getElementById('local-time-zone-modal-label');
 
+const locationSwitchRow = document.getElementById('location-switch-row');
 const locationSwitchLabel = document.getElementById('location-switch-label');
 
 const latLabel = document.getElementById('lat-label');
@@ -103,6 +104,8 @@ async function handleChime () {
 
     if (!isLocationChimeEnabled()) {
 
+        console.log('Chiming using timezone offset', tzOffsetMinutes);
+
         audioMothChimeConnector.playTime(date, tzOffsetMinutes, undefined, undefined, () => {
 
             enableLocationSwitch();
@@ -114,7 +117,7 @@ async function handleChime () {
 
         const latLng = getMarkerLatLng();
 
-        console.log('Chiming using location', latLng.lat, latLng.lng);
+        console.log('Chiming using timezone offset and location', tzOffsetMinutes, latLng.lat, latLng.lng);
 
         audioMothChimeConnector.playTime(date, tzOffsetMinutes, latLng.lat, latLng.lng, () => {
 
@@ -127,6 +130,100 @@ async function handleChime () {
     }
 
 }
+
+function resizeElementsBasedOnOrientation () {
+
+    console.log('Resizing elements based on orientation');
+
+    const isPortrait = window.innerHeight > window.innerWidth;
+
+    const width = window.innerWidth;
+
+    let thickness;
+    const radius = window.innerWidth * 0.04 + 'px';
+
+    if (isPortrait) {
+
+        console.log('Portrait');
+
+        timeLabel.style.fontSize = 0.1 * width + 'px';
+        timeZoneHolder.style.fontSize = 0.05 * width + 'px';
+        locationSwitchLabel.style.fontSize = 0.05 * width + 'px';
+        latLabel.style.fontSize = 0.075 * width + 'px';
+        latLabel.style.marginTop = '0px';
+        lonLabel.style.fontSize = 0.075 * width + 'px';
+        lonLabel.style.marginTop = '-25px';
+
+        let timeRowMarginTop = 'calc(40vh - 270px';
+        timeRowMarginTop += /iPhone|iPad|iPod/i.test(navigator.userAgent) ? ' - ' + iphoneWarning.offsetHeight + 'px)' : ')';
+        timeRow.style.marginTop = timeRowMarginTop;
+
+        timeRow.style.height = '12vh';
+        locationRow.style.height = '15vh';
+
+        thickness = window.innerWidth * 0.01 + 'px';
+
+        chimeButton.style.setProperty('height', (window.innerHeight * 0.075) + 'px', 'important');
+        chimeButton.style.fontSize = 0.05 * window.innerWidth + 'px';
+
+    } else {
+
+        console.log('Landscape');
+
+        timeLabel.style.fontSize = 0.04 * width + 'px';
+        timeZoneHolder.style.fontSize = 0.025 * width + 'px';
+
+        locationSwitchRow.style.marginTop = '0px';
+        locationSwitchLabel.style.fontSize = 0.025 * width + 'px';
+        locationSwitch.style.marginTop = '0px';
+        latLabel.style.fontSize = 0.035 * width + 'px';
+        latLabel.style.marginTop = '0px';
+        lonLabel.style.fontSize = 0.035 * width + 'px';
+        lonLabel.style.marginTop = '-20px';
+
+        timeRow.style.marginTop = '20px';
+        timeRow.style.height = '25vh';
+        locationRow.style.height = '30vh';
+
+        switchDiv.style.height = '40px';
+
+        thickness = window.innerWidth * 0.005 + 'px';
+
+        chimeButton.style.setProperty('height', (window.innerHeight * 0.15) + 'px', 'important');
+        chimeButton.style.fontSize = 0.035 * window.innerWidth + 'px';
+
+    }
+
+    document.querySelectorAll('.rounded-border').forEach(el => {
+
+        el.style.setProperty('border-width', thickness, 'important');
+        el.style.setProperty('border-radius', radius, 'important');
+
+    });
+
+    chimeButton.style.position = 'fixed';
+    chimeButton.style.left = '50%';
+    chimeButton.style.transform = 'translateX(-50%)';
+    chimeButton.style.bottom = (window.innerHeight * 0.05) + 'px';
+    chimeButton.style.zIndex = '1000';
+    console.log(timeRow.style.width);
+    const parent = chimeButton.parentElement || document.body;
+    const parentRect = parent.getBoundingClientRect();
+    const widthPx = Math.round(parentRect.width) + 'px';
+    // Align the fixed button to the parent's left edge and remove centering transform
+    chimeButton.style.left = Math.round(parentRect.left) + 'px';
+    chimeButton.style.transform = 'none';
+    chimeButton.style.setProperty('width', widthPx, 'important');
+
+}
+
+window.addEventListener('orientationchange', () => {
+
+    console.log('Orientation change');
+
+    resizeElementsBasedOnOrientation();
+
+});
 
 async function loadPage () {
 
@@ -147,7 +244,18 @@ async function loadPage () {
 
     if (isIOS) {
 
-        iphoneWarning.innerHTML = 'Adjust volume to 3/4 full and ensure<br>that silent mode is switched off.';
+        // If landscape
+        if (window.innerWidth > window.innerHeight) {
+
+            iphoneWarning.innerHTML = 'Adjust volume to 3/4 full and ensure that silent mode is switched off.';
+
+            iphoneWarning.style.fontSize = (0.025 * window.innerWidth) + 'px';
+
+        } else {
+
+            iphoneWarning.innerHTML = 'Adjust volume to 3/4 full and ensure<br>that silent mode is switched off.';
+
+        }
 
         setTimeout(() => {
 
@@ -172,43 +280,7 @@ async function loadPage () {
         timeZoneMobileSpan.style.display = '';
         timeZoneLink.style.display = 'none';
 
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-
-        timeLabel.style.fontSize = 0.1 * width + 'px';
-        timeZoneHolder.style.fontSize = 0.05 * width + 'px';
-
-        locationSwitchLabel.style.fontSize = 0.05 * width + 'px';
-
-        latLabel.style.fontSize = 0.075 * width + 'px';
-        latLabel.style.marginTop = '0px';
-        lonLabel.style.fontSize = 0.075 * width + 'px';
-        lonLabel.style.marginTop = '-25px';
-
-        let timeRowMarginTop = 'calc(40vh - 270px';
-        timeRowMarginTop += isIOS ? ' - ' + iphoneWarning.offsetHeight + 'px)' : ')';
-        timeRow.style.marginTop = timeRowMarginTop;
-
-        timeRow.style.height = '270px';
-        locationRow.style.height = '300px';
-
-        const thickness = width * 0.01 + 'px';
-        const radius = width * 0.04 + 'px';
-        document.querySelectorAll('.rounded-border').forEach(el => {
-
-            el.style.setProperty('border-width', thickness, 'important');
-            el.style.setProperty('border-radius', radius, 'important');
-
-        });
-
-        chimeButton.style.position = 'fixed';
-        chimeButton.style.left = '50%';
-        chimeButton.style.transform = 'translateX(-50%)';
-        chimeButton.style.bottom = (height * 0.05) + 'px';
-        chimeButton.style.zIndex = '1000';
-        chimeButton.style.setProperty('width', '80%', 'important');
-        chimeButton.style.setProperty('height', (height * 0.075) + 'px', 'important');
-        chimeButton.style.fontSize = 0.05 * width + 'px';
+        resizeElementsBasedOnOrientation();
 
     } else {
 
@@ -290,6 +362,8 @@ function checkWindowSize () {
         timeRow.style.height = '120px';
         locationRow.style.height = '150px';
 
+        timeZoneHolder.style.fontSize = '30px';
+
         mapDiv.style.height = 'calc(100vh - 430px)';
 
     } else {
@@ -301,6 +375,8 @@ function checkWindowSize () {
 
         timeRow.style.height = '200px';
         locationRow.style.height = '250px';
+
+        timeZoneHolder.style.fontSize = '40px';
 
         mapDiv.style.height = 'calc(100vh - 620px)';
 

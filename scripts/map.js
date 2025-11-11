@@ -31,6 +31,16 @@ let timeZoneLookupEnabled = false;
 
 let mapTimeZone;
 
+function setMapView (latLng, zoom) {
+
+    if (!mapHidden) {
+
+        map.setView(latLng, zoom);
+
+    }
+
+}
+
 async function getTimeZoneForNormalisedLocation () {
 
     return await getTimeZoneFromCoord(normalisedLocation.lat, normalisedLocation.lng);
@@ -57,15 +67,7 @@ function enableLocationSwitch () {
 
 function getMarkerLatLng () {
 
-    if (marker) {
-
-        return normalisedLocation;
-
-    } else {
-
-        return {lat: 0, lng: 0};
-
-    }
+    return normalisedLocation;
 
 }
 
@@ -234,7 +236,7 @@ function setUpMap () {
 
                 updateMarkerPosition(userLocation);
 
-                map.setView(userLocation, 13);
+                setMapView(userLocation, 13);
 
                 if (timeZoneLookupEnabled) {
 
@@ -280,7 +282,7 @@ function setUpMap () {
 
         updateMarkerPosition(latLng);
 
-        map.setView(latLng, zoom);
+        setMapView(latLng, zoom);
 
         mapTimeZone = await getTimeZoneForNormalisedLocation();
         updateMapTimeZoneModalLabel();
@@ -313,7 +315,7 @@ function setUpMap () {
 
         updateMarkerPosition(latLng);
 
-        map.setView(latLng);
+        setMapView(latLng);
 
         mapTimeZone = await getTimeZoneForNormalisedLocation();
         updateMapTimeZoneModalLabel();
@@ -364,7 +366,7 @@ async function setMapMarkerToDefault () {
 
     updateMarkerPosition({lat: 0, lng: 0});
 
-    map.setView({lat: 0, lng: 0}, 2);
+    setMapView({lat: 0, lng: 0}, 2);
 
     if (timeZoneLookupEnabled) {
 
@@ -393,7 +395,7 @@ async function enableMap () {
 
                 updateMarkerPosition({lat: userLat, lng: userLon});
 
-                map.setView({lat: userLat, lng: userLon}, 13);
+                setMapView({lat: userLat, lng: userLon}, 13);
 
                 if (timeZoneLookupEnabled) {
 
