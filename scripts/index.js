@@ -131,66 +131,119 @@ async function handleChime () {
 
 }
 
+function isMobile () {
+
+    return /iPhone|iPod|Android/i.test(navigator.userAgent);
+
+}
+
+function isIOS () {
+
+    return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+}
+
+function isPortrait () {
+
+    return window.screen.orientation.angle === 0 || window.screen.orientation.angle === 180;
+
+}
+
 function resizeElementsBasedOnOrientation () {
 
     console.log('Resizing elements based on orientation');
 
-    const isPortrait = window.innerHeight > window.innerWidth;
+    if (!isMobile()) {
 
-    const width = window.innerWidth;
+        return;
+
+    }
+
+    const width = window.screen.width;
+    const height = window.screen.height;
+
+    console.log('Window width:', width, 'height:', height);
 
     let thickness;
     const radius = window.innerWidth * 0.04 + 'px';
 
-    if (isPortrait) {
+    if (isPortrait()) {
 
         console.log('Portrait');
 
-        timeLabel.style.fontSize = 0.1 * width + 'px';
-        timeZoneHolder.style.fontSize = 0.05 * width + 'px';
-        locationSwitchLabel.style.fontSize = 0.05 * width + 'px';
-        latLabel.style.fontSize = 0.075 * width + 'px';
+        iphoneWarning.style.fontSize = (0.1 * width) + 'px';
+
+        if (isIOS()) {
+
+            iphoneWarning.innerHTML = 'Adjust volume to 3/4 full and ensure<br>that silent mode is switched off.';
+
+        }
+
+        timeLabel.style.fontSize = 0.2 * width + 'px';
+
+        timeZoneHolder.style.fontSize = 0.1 * width + 'px';
+
+        locationSwitchLabel.style.fontSize = 0.1 * width + 'px';
+
+        latLabel.style.fontSize = 0.2 * width + 'px';
         latLabel.style.marginTop = '0px';
-        lonLabel.style.fontSize = 0.075 * width + 'px';
+
+        lonLabel.style.fontSize = 0.2 * width + 'px';
         lonLabel.style.marginTop = '-25px';
+        lonLabel.style.marginBottom = '-10px';
 
-        let timeRowMarginTop = 'calc(40vh - 270px';
-        timeRowMarginTop += /iPhone|iPad|iPod/i.test(navigator.userAgent) ? ' - ' + iphoneWarning.offsetHeight + 'px)' : ')';
+        let timeRowMarginTop = 'calc(40vh - 12vh';
+        timeRowMarginTop += isIOS() ? ' - ' + iphoneWarning.offsetHeight + 'px)' : ')';
         timeRow.style.marginTop = timeRowMarginTop;
-
         timeRow.style.height = '12vh';
+
+        locationRow.style.marginTop = height * 0.05 + 'px';
         locationRow.style.height = '15vh';
 
         thickness = window.innerWidth * 0.01 + 'px';
 
-        chimeButton.style.setProperty('height', (window.innerHeight * 0.075) + 'px', 'important');
-        chimeButton.style.fontSize = 0.05 * window.innerWidth + 'px';
+        chimeButton.style.setProperty('height', (height * 0.15) + 'px', 'important');
+        chimeButton.style.fontSize = 0.1 * width + 'px';
 
     } else {
 
         console.log('Landscape');
 
-        timeLabel.style.fontSize = 0.04 * width + 'px';
-        timeZoneHolder.style.fontSize = 0.025 * width + 'px';
+        iphoneWarning.style.fontSize = (0.025 * width) + 'px';
+
+        if (isIOS()) {
+
+            iphoneWarning.innerHTML = 'Adjust volume to 3/4 full and ensure that silent mode is switched off.';
+
+        }
+
+        timeLabel.style.fontSize = 0.045 * width + 'px';
+        console.log('timeLabel.fontSize:', timeLabel.style.fontSize);
+        timeZoneHolder.style.fontSize = 0.03 * width + 'px';
 
         locationSwitchRow.style.marginTop = '0px';
-        locationSwitchLabel.style.fontSize = 0.025 * width + 'px';
+        locationSwitchLabel.style.fontSize = 0.03 * width + 'px';
         locationSwitch.style.marginTop = '0px';
-        latLabel.style.fontSize = 0.035 * width + 'px';
-        latLabel.style.marginTop = '0px';
-        lonLabel.style.fontSize = 0.035 * width + 'px';
-        lonLabel.style.marginTop = '-20px';
 
-        timeRow.style.marginTop = '20px';
-        timeRow.style.height = '25vh';
-        locationRow.style.height = '30vh';
+        latLabel.style.fontSize = 0.04 * width + 'px';
+        latLabel.style.marginTop = '0px';
+
+        lonLabel.style.fontSize = 0.04 * width + 'px';
+        lonLabel.style.marginTop = '-10px';
+        lonLabel.style.marginBottom = '0px';
+
+        timeRow.style.marginTop = isIOS() ? 0 : '5vh';
+        timeRow.style.height = '27vh';
+
+        locationRow.style.marginTop = height * 0.05 + 'px';
+        locationRow.style.height = '35vh';
 
         switchDiv.style.height = '40px';
 
         thickness = window.innerWidth * 0.005 + 'px';
 
-        chimeButton.style.setProperty('height', (window.innerHeight * 0.15) + 'px', 'important');
-        chimeButton.style.fontSize = 0.035 * window.innerWidth + 'px';
+        chimeButton.style.setProperty('height', (height * 0.15) + 'px', 'important');
+        chimeButton.style.fontSize = 0.03 * width + 'px';
 
     }
 
@@ -221,16 +274,23 @@ window.addEventListener('orientationchange', () => {
 
     console.log('Orientation change');
 
-    resizeElementsBasedOnOrientation();
+    mainContent.style.opacity = '0';
+
+    setTimeout(() => {
+
+        resizeElementsBasedOnOrientation();
+
+        mainContent.style.opacity = '1';
+
+    }, 150);
 
 });
 
 async function loadPage () {
 
-    const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    console.log(navigator.userAgent);
 
-    if (!isMobile) {
+    if (!isMobile()) {
 
         await initialiseTzf();
 
@@ -240,40 +300,9 @@ async function loadPage () {
 
     chimeButton.addEventListener('click', handleChime);
 
-    mainContent.style.display = 'flex';
+    mainContent.style.opacity = '1';
 
-    if (isIOS) {
-
-        // If landscape
-        if (window.innerWidth > window.innerHeight) {
-
-            iphoneWarning.innerHTML = 'Adjust volume to 3/4 full and ensure that silent mode is switched off.';
-
-            iphoneWarning.style.fontSize = (0.025 * window.innerWidth) + 'px';
-
-        } else {
-
-            iphoneWarning.innerHTML = 'Adjust volume to 3/4 full and ensure<br>that silent mode is switched off.';
-
-        }
-
-        setTimeout(() => {
-
-            iphoneWarning.style.opacity = '0';
-
-        }, 5000);
-
-    } else {
-
-        // If Android or other
-
-        iphoneWarning.innerText = '';
-
-        chimeButton.innerText = 'PLAY CHIME';
-
-    }
-
-    if (isMobile) {
+    if (isMobile()) {
 
         hideMap();
 
@@ -289,6 +318,24 @@ async function loadPage () {
 
         showMap();
         setUpMap();
+
+    }
+
+    if (isIOS()) {
+
+        setTimeout(() => {
+
+            iphoneWarning.style.opacity = '0';
+
+        }, 5000);
+
+    } else {
+
+        // If Android or other
+
+        iphoneWarning.innerText = '';
+
+        chimeButton.innerText = 'PLAY CHIME';
 
     }
 
