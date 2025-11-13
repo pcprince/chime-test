@@ -133,6 +133,13 @@ async function handleChime () {
 
 function isMobile () {
 
+    // Surface tablets should display the full map interface
+    if (/Surface/i.test(navigator.userAgent)) {
+
+        return false;
+
+    }
+
     return /iPhone|iPod|Android/i.test(navigator.userAgent);
 
 }
@@ -218,7 +225,6 @@ function resizeElementsBasedOnOrientation () {
         }
 
         timeLabel.style.fontSize = 0.045 * width + 'px';
-        console.log('timeLabel.fontSize:', timeLabel.style.fontSize);
         timeZoneHolder.style.fontSize = 0.03 * width + 'px';
 
         locationSwitchRow.style.marginTop = '0px';
@@ -259,7 +265,6 @@ function resizeElementsBasedOnOrientation () {
     chimeButton.style.transform = 'translateX(-50%)';
     chimeButton.style.bottom = (window.innerHeight * 0.05) + 'px';
     chimeButton.style.zIndex = '1000';
-    console.log(timeRow.style.width);
     const parent = chimeButton.parentElement || document.body;
     const parentRect = parent.getBoundingClientRect();
     const widthPx = Math.round(parentRect.width) + 'px';
@@ -304,6 +309,8 @@ async function loadPage () {
 
     if (isMobile()) {
 
+        console.log('Mobile device');
+
         hideMap();
 
         timeZoneMobileSpan.style.display = '';
@@ -312,6 +319,10 @@ async function loadPage () {
         resizeElementsBasedOnOrientation();
 
     } else {
+
+        console.log('Desktop device');
+
+        checkWindowSize();
 
         iphoneWarning.style.display = 'none';
         timeRow.style.marginTop = '0';
@@ -331,8 +342,6 @@ async function loadPage () {
 
     } else {
 
-        // If Android or other
-
         iphoneWarning.innerText = '';
 
         chimeButton.innerText = 'PLAY CHIME';
@@ -342,8 +351,6 @@ async function loadPage () {
 }
 
 window.addEventListener('load', () => {
-
-    checkWindowSize();
 
     audioMothChimeConnector = new AudioMothChimeConnector();
 
@@ -387,7 +394,7 @@ window.addEventListener('load', () => {
 
 function checkWindowSize () {
 
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+    if (isMobile()) {
 
         return;
 
